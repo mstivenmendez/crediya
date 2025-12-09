@@ -1,4 +1,4 @@
-package proyecto.Personal;
+package proyecto.personal;
 
 public class Cliente {
    

@@ -1,8 +1,8 @@
-package proyecto.Vista;
+package proyecto.vista;
 
 import javax.swing.JOptionPane;
 
-import proyecto.Validaciones.ValidarNumero;
+import proyecto.validaciones.ValidarNumero;
 
 public class Opcion {
    Menu ingreso = new Menu();

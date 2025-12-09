@@ -1,4 +1,4 @@
-package proyecto.Solicitud;
+package proyecto.solicitud;
 
 import javax.swing.JOptionPane;
 

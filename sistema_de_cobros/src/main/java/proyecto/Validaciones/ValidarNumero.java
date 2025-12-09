@@ -1,4 +1,4 @@
-package proyecto.Validaciones;
+package proyecto.validaciones;
 
 import javax.swing.JOptionPane;
 

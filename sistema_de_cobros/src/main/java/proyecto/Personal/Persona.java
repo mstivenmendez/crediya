@@ -4,16 +4,16 @@ import java.time.LocalDate;
 
 public class Persona {
 
-   private String nombre,apellido,correo,telefono, cedula ;
+   private String nombre,apellido,correo,telefono, documento ;
    private LocalDate fechaNacimiento;
 
-   public Persona(String nombre, String apellido, String correo, String telefono, String cedula,
+   public Persona(String nombre, String apellido, String correo, String telefono, String documento,
          LocalDate fechaNacimiento) {
       this.nombre = nombre;
       this.apellido = apellido;
       this.correo = correo;
       this.telefono = telefono;
-      this.cedula = cedula;
+      this.documento = documento;
       this.fechaNacimiento = fechaNacimiento;
    }
 
@@ -44,11 +44,11 @@ public class Persona {
    public void setTelefono(String telefono) {
       this.telefono = telefono;
    }
-   public String getCedula() {
-      return cedula;
+   public String getDocumento() {
+      return documento;
    }
-   public void setCedula(String cedula) {
-      this.cedula = cedula;
+   public void setDocumento(String cedula) {
+      this.documento = cedula;
    }
    public LocalDate getFechaNacimiento() {
       return fechaNacimiento;

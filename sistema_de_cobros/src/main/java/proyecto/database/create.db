@@ -1,0 +1,109 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema crediya_db
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema crediya_db
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `crediya_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `crediya_db` ;
+
+-- -----------------------------------------------------
+-- Table `crediya_db`.`usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `crediya_db`.`usuario` (
+  `usuario_id` INT NOT NULL AUTO_INCREMENT,
+  `rol` ENUM('cliente', 'empleado', 'administrador') NOT NULL,
+  `correo` VARCHAR(80) NOT NULL,
+  `clave` VARCHAR(45) NULL,
+  `estado` ENUM('activo', 'inactivo') NULL,
+  `fecha_creacion` DATETIME NULL,
+  PRIMARY KEY (`usuario_id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `crediya_db`.`cliente`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `crediya_db`.`cliente` (
+  `usuario_id_fk` INT NOT NULL AUTO_INCREMENT,
+  `primer_nombre` VARCHAR(45) NULL,
+  `segundo_nombre` VARCHAR(45) NULL,
+  `primer_apellido` VARCHAR(45) NOT NULL,
+  `segundo_apellido` VARCHAR(45) NULL,
+  `documento` VARCHAR(45) NOT NULL,
+  `telefono` VARCHAR(45) NULL,
+  INDEX `fk_cliente_usuario_idx` (`usuario_id_fk` ASC) VISIBLE,
+  PRIMARY KEY (`usuario_id_fk`),
+  CONSTRAINT `fk_cliente_usuario`
+    FOREIGN KEY (`usuario_id_fk`)
+    REFERENCES `crediya_db`.`usuario` (`usuario_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `crediya_db`.`empleado`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `crediya_db`.`empleado` (
+  `usuario_id_fk` INT NOT NULL AUTO_INCREMENT,
+  `primer_nombre` VARCHAR(45) NOT NULL,
+  `segundo_nombre` VARCHAR(45) NULL,
+  `primer_apellido` VARCHAR(45) NOT NULL,
+  `segundo_apellido` VARCHAR(45) NULL,
+  `documento` VARCHAR(45) NOT NULL,
+  `telefono` VARCHAR(45) NULL,
+  `salario` DECIMAL(10,2) NOT NULL,
+  INDEX `fk_empleado_usuario1_idx` (`usuario_id_fk` ASC) VISIBLE,
+  PRIMARY KEY (`usuario_id_fk`),
+  CONSTRAINT `fk_empleado_usuario1`
+    FOREIGN KEY (`usuario_id_fk`)
+    REFERENCES `crediya_db`.`usuario` (`usuario_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `crediya_db`.`prestamo`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `crediya_db`.`prestamo` (
+  `prestamo_id` VARCHAR(45) NOT NULL,
+  `empleado_usuario_id_fk` INT NOT NULL,
+  `cliente_usuario_id_fk` INT NOT NULL,
+  `monto` DECIMAL(12,2) NOT NULL,
+  `interes` DECIMAL(10,2) NOT NULL,
+  `cuotas` INT NOT NULL,
+  `fecha_inicio` DATETIME NOT NULL,
+  PRIMARY KEY (`prestamo_id`, `empleado_usuario_id_fk`, `cliente_usuario_id_fk`),
+  INDEX `fk_cliente_has_empleado_empleado1_idx` (`empleado_usuario_id_fk` ASC) VISIBLE,
+  UNIQUE INDEX `prestamo_id_UNIQUE` (`prestamo_id` ASC) VISIBLE,
+  UNIQUE INDEX `empleado_usuario_id_fk_UNIQUE` (`empleado_usuario_id_fk` ASC) VISIBLE,
+  INDEX `fk_prestamo_cliente1_idx` (`cliente_usuario_id_fk` ASC) VISIBLE,
+  UNIQUE INDEX `cliente_usuario_id_fk_UNIQUE` (`cliente_usuario_id_fk` ASC) VISIBLE,
+  CONSTRAINT `fk_cliente_has_empleado_empleado1`
+    FOREIGN KEY (`empleado_usuario_id_fk`)
+    REFERENCES `crediya_db`.`empleado` (`usuario_id_fk`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_prestamo_cliente1`
+    FOREIGN KEY (`cliente_usuario_id_fk`)
+    REFERENCES `crediya_db`.`cliente` (`usuario_id_fk`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

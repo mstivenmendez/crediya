@@ -1,8 +1,8 @@
-package proyecto.Vista;
+package proyecto.vista;
 
 import javax.swing.JOptionPane;
 
-import proyecto.Solicitud.Datos;
+import proyecto.solicitud.Datos;
 
 public class Menu {
 

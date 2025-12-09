@@ -6,9 +6,9 @@ import javax.swing.JOptionPane;
 
 public class ConexionMysql {
 
-   private static final String URL = "jdbc:mysql://localhost:3309/Persistencia";
+   private static final String URL = "jdbc:mysql://localhost:3306/crediya_db";
    private static final String USER = "root";
-   private static final String PASSWORD = "admin";
+   private static final String PASSWORD = "quiopro123";
 
    public static Connection conectar(){
       Connection conexion = null;

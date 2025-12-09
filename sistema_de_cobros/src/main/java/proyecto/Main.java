@@ -1,6 +1,6 @@
 package proyecto;
 
-import proyecto.Vista.Inicio;
+import proyecto.vista.Inicio;
 
 public class Main {
    public static void main(String[] args) {

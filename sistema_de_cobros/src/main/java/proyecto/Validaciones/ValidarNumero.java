@@ -4,49 +4,91 @@ import javax.swing.JOptionPane;
 
 public class ValidarNumero {
 
-   public Integer solicitarEntero(String ingreso, int valor) {
-      boolean bandera = true;
-      do {
+   public Integer solicitarEntero(String ingreso, int valorMaximo) {
 
-         ingreso = ingreso.trim();
-         try {
-            int numero = Integer.parseInt(ingreso);
-            if (numero > valor || numero < 0) {
-               JOptionPane.showMessageDialog(null, "Número fuera del rango.");
-               return 0;
-            }
-            return numero;
-         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar un número entero.");
-            return -1;
+      if (ingreso == null) {
+         JOptionPane.showMessageDialog(null,
+            "⚠️ Operación cancelada",
+            "Aviso",
+            JOptionPane.WARNING_MESSAGE);
+         return null;
+      }
+
+      ingreso = ingreso.trim();
+
+      if (ingreso.isEmpty()) {
+         JOptionPane.showMessageDialog(null,
+            "❌ ERROR: El campo no puede estar vacío.\nPor favor ingrese un número.",
+            "Entrada Inválida",
+            JOptionPane.ERROR_MESSAGE);
+         return null;
+      }
+
+      try {
+         int numero = Integer.parseInt(ingreso);
+
+         if (numero < 0 || numero > valorMaximo) {
+            JOptionPane.showMessageDialog(null,
+               "❌ ERROR: Número fuera del rango permitido.\n" +
+               "Debe ingresar un valor entre 0 y " + valorMaximo,
+               "Rango Inválido",
+               JOptionPane.ERROR_MESSAGE);
+            return null;
          }
-      } while (bandera);
+
+         return numero;
+
+      } catch (NumberFormatException e) {
+         JOptionPane.showMessageDialog(null,
+            "❌ ERROR: Entrada inválida.\n" +
+            "Debe ingresar un número entero, no letras ni caracteres especiales.",
+            "Formato Incorrecto",
+            JOptionPane.ERROR_MESSAGE);
+         return null;
+      }
    }
 
-   public Double solicitarDouble(String ingreso, double valor) {
-      boolean bandera = true;
-      do {
-         if (ingreso == null) {
-            JOptionPane.showMessageDialog(null, "Ingrese una opcion");
-            return -1.0;
+   public Double solicitarDouble(String ingreso, double valorMaximo) {
+
+      if (ingreso == null) {
+         JOptionPane.showMessageDialog(null,
+            "⚠️ Operación cancelada",
+            "Aviso",
+            JOptionPane.WARNING_MESSAGE);
+         return null;
+      }
+
+      ingreso = ingreso.trim();
+
+      if (ingreso.isEmpty()) {
+         JOptionPane.showMessageDialog(null,
+            "❌ ERROR: El campo no puede estar vacío.\nPor favor ingrese un número.",
+            "Entrada Inválida",
+            JOptionPane.ERROR_MESSAGE);
+         return null;
+      }
+
+      try {
+         double numero = Double.parseDouble(ingreso);
+
+         if (numero < 0 || numero > valorMaximo) {
+            JOptionPane.showMessageDialog(null,
+               "❌ ERROR: Número fuera del rango permitido.\n" +
+               "Debe ingresar un valor entre 0 y " + valorMaximo,
+               "Rango Inválido",
+               JOptionPane.ERROR_MESSAGE);
+            return null;
          }
 
-         ingreso = ingreso.trim();
+         return numero;
 
-         try {
-            double numero = Double.parseDouble(ingreso);
-
-            if (numero > valor || numero < 0) {
-               JOptionPane.showMessageDialog(null, "Número fuera del rango.");
-               return -1.0;
-            }
-
-            return numero;
-
-         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Debe ingresar un número.");
-            return -1.0;
-         }
-      } while (bandera);
+      } catch (NumberFormatException e) {
+         JOptionPane.showMessageDialog(null,
+            "❌ ERROR: Entrada inválida.\n" +
+            "Debe ingresar un número válido (puede usar decimales con punto o coma).",
+            "Formato Incorrecto",
+            JOptionPane.ERROR_MESSAGE);
+         return null;
+      }
    }
 }

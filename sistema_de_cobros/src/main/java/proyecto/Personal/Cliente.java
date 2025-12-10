@@ -2,23 +2,23 @@ package proyecto.personal;
 
 import java.time.LocalDate;
 
+import proyecto.prestamo.Estado;
+
 public class Cliente extends Persona {
 
    private String idCliente;
    private String usuario;
    private String contraseña;
-   private String correo;
-   private String estado;
+   private Estado estado;
    private LocalDate fechaRegistro;
 
    public Cliente(String nombre, String apellido, String correo, String telefono, String documento,
-         LocalDate fechaNacimiento, String idCliente, String usuario, String contraseña, String correo2, String estado,
+         LocalDate fechaNacimiento, String idCliente, String usuario, String contraseña, String correo2, Estado estado,
          LocalDate fechaRegistro) {
       super(nombre, apellido, correo, telefono, documento, fechaNacimiento);
       this.idCliente = idCliente;
       this.usuario = usuario;
       this.contraseña = contraseña;
-      correo = correo2;
       this.estado = estado;
       this.fechaRegistro = fechaRegistro;
    }
@@ -44,16 +44,10 @@ public class Cliente extends Persona {
    public void setContraseña(String contraseña) {
       this.contraseña = contraseña;
    }
-   public String getCorreo() {
-      return correo;
-   }
-   public void setCorreo(String correo) {
-      this.correo = correo;
-   }
-   public String getEstado() {
+   public Estado getEstado() {
       return estado;
    }
-   public void setEstado(String estado) {
+   public void setEstado(Estado estado) {
       this.estado = estado;
    }
    public LocalDate getFechaRegistro() {

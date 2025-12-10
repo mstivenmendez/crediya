@@ -9,17 +9,20 @@ public class Empleado extends Persona{
    private double sueldo;
    private LocalDate fechaContratacion;
 
-   public Empleado(String nombre, String apellido, String correo, String telefono, String documento,
-         LocalDate fechaNacimiento, String idEmpleado, String cargo, double sueldo, LocalDate fechaContratacion) {
-      super(nombre, apellido, correo, telefono, documento, fechaNacimiento);
+
+   public Empleado(String nombre, String nombre2, String apellido, String apellido2, String correo, String telefono,
+         String documento, LocalDate fechaNacimiento, String idEmpleado, String cargo, double sueldo,
+         LocalDate fechaContratacion) {
+      super(nombre, nombre2, apellido, apellido2, correo, telefono, documento, fechaNacimiento);
       this.idEmpleado = idEmpleado;
       this.cargo = cargo;
       this.sueldo = sueldo;
       this.fechaContratacion = fechaContratacion;
    }
+
    public Empleado() {
    }
-   
+
    public String getIdEmpleado() {
       return idEmpleado;
    }

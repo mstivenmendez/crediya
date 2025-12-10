@@ -12,10 +12,10 @@ public class Cliente extends Persona {
    private Estado estado;
    private LocalDate fechaRegistro;
 
-   public Cliente(String nombre, String apellido, String correo, String telefono, String documento,
-         LocalDate fechaNacimiento, String idCliente, String usuario, String contraseña, String correo2, Estado estado,
-         LocalDate fechaRegistro) {
-      super(nombre, apellido, correo, telefono, documento, fechaNacimiento);
+   public Cliente(String nombre, String nombre2, String apellido, String apellido2, String correo, String telefono,
+         String documento, LocalDate fechaNacimiento, String idCliente, String usuario, String contraseña,
+         Estado estado, LocalDate fechaRegistro) {
+      super(nombre, nombre2, apellido, apellido2, correo, telefono, documento, fechaNacimiento);
       this.idCliente = idCliente;
       this.usuario = usuario;
       this.contraseña = contraseña;

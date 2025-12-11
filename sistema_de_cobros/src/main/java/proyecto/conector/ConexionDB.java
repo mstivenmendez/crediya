@@ -12,5 +12,5 @@ public class ConexionDB {
    public static Connection conectar() throws SQLException {
       return DriverManager.getConnection(URL, USER, PASSWORD);
    }
-
 }
+   

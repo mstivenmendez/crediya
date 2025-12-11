@@ -142,3 +142,94 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+//// inserts
+
+-- Insertar roles básicos en la tabla rol
+-- Ejecutar este script DESPUÉS de crear la base de datos
+
+USE crediya_db;
+
+-- Limpiar tabla de roles si existe data previa (opcional)
+-- DELETE FROM rol;
+
+-- Insertar roles básicos
+INSERT INTO rol (rol_id, nombre) VALUES
+(1, 'Administrador'),
+(2, 'Cliente'),
+(3, 'Empleado');
+
+-- Verificar que se insertaron correctamente
+SELECT * FROM rol;
+
+-- (OPCIONAL) Crear un usuario administrador de prueba
+-- Contraseña: Admin123! (ajusta según tus necesidades)
+INSERT INTO usuario (correo, clave, estado, fecha_creacion) 
+VALUES ('admin@crediya.com', 'Admin123!', 'activo', NOW());
+
+-- Obtener el ID del usuario recién creado
+SET @admin_usuario_id = LAST_INSERT_ID();
+
+-- Insertar información del administrador
+INSERT INTO informacion (usuario_id_fk, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, documento, telefono, salario)
+VALUES (@admin_usuario_id, 'Admin', NULL, 'Sistema', NULL, '0000000000', '0000000000', NULL);
+
+-- Asignar rol de administrador
+INSERT INTO usuario_rol (usuario_id_fk, rol_id_fk)
+VALUES (@admin_usuario_id, 1);
+
+-- Verificar el usuario administrador
+SELECT 
+    u.usuario_id,
+    u.correo,
+    u.estado,
+    i.primer_nombre,
+    i.primer_apellido,
+    r.nombre as rol
+FROM usuario u
+INNER JOIN informacion i ON u.usuario_id = i.usuario_id_fk
+INNER JOIN usuario_rol ur ON u.usuario_id = ur.usuario_id_fk
+INNER JOIN rol r ON ur.rol_id_fk = r.rol_id
+WHERE u.correo = 'admin@crediya.com';
+
+-- Consultas útiles para verificar la estructura
+
+-- Ver todos los usuarios con sus roles
+SELECT 
+    u.usuario_id,
+    u.correo,
+    u.estado,
+    i.primer_nombre,
+    i.primer_apellido,
+    i.documento,
+    r.nombre as rol
+FROM usuario u
+INNER JOIN informacion i ON u.usuario_id = i.usuario_id_fk
+INNER JOIN usuario_rol ur ON u.usuario_id = ur.usuario_id_fk
+INNER JOIN rol r ON ur.rol_id_fk = r.rol_id
+ORDER BY u.usuario_id;
+
+-- Ver solo clientes
+SELECT 
+    u.usuario_id,
+    u.correo,
+    u.estado,
+    i.primer_nombre,
+    i.primer_apellido,
+    i.documento,
+    i.telefono
+FROM usuario u
+INNER JOIN informacion i ON u.usuario_id = i.usuario_id_fk
+INNER JOIN usuario_rol ur ON u.usuario_id = ur.usuario_id_fk
+WHERE ur.rol_id_fk = 2
+ORDER BY u.usuario_id;
+
+-- Contar usuarios por rol
+SELECT 
+    r.nombre as rol,
+    COUNT(*) as cantidad
+FROM usuario_rol ur
+INNER JOIN rol r ON ur.rol_id_fk = r.rol_id
+GROUP BY r.nombre;

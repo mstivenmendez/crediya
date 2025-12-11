@@ -2,10 +2,18 @@ package proyecto.vista;
 
 import javax.swing.JOptionPane;
 import proyecto.validaciones.ValidarNumero;
+import proyecto.crud.ClienteCrud;
+import proyecto.crud.EmpleadoCrud;
+import proyecto.personal.Cliente;
+import java.util.List;
 
 public class Opcion {
    Menu ingreso = new Menu();
    ValidarNumero numero = new ValidarNumero();
+   
+   // Instancias de los CRUDs
+   ClienteCrud clienteCrud = new ClienteCrud();
+   EmpleadoCrud empleadoCrud = new EmpleadoCrud();
 
    public void VistaSesionOpcion(int valor){
       switch (valor) {
@@ -13,7 +21,8 @@ public class Opcion {
             VistaInicioOpcion(numero.solicitarEntero(ingreso.VistaInicio(),2));
             break;
          case 2:
-            JOptionPane.showMessageDialog(null, "Registro");
+            // Registro de nuevo cliente
+            registrarNuevoCliente();
             break;
          case 0:
             JOptionPane.showMessageDialog(null, "Saliendo del Programa...");
@@ -51,7 +60,7 @@ public class Opcion {
    public void VistaAdministradorOpcion(int valor){
       switch (valor) {
          case 1:
-            // Bucle para gestión de empleados
+            // Gestión de empleados
             boolean continuarEmpleado = true;
             while(continuarEmpleado) {
                Integer opcion = numero.solicitarEntero(ingreso.VistaEmpleado(), 4);
@@ -60,15 +69,15 @@ public class Opcion {
                   JOptionPane.showMessageDialog(null, "Regresando al menú de administrador...");
                   continuarEmpleado = false;
                } else {
-                  VistaAdministradorEmpledaoOpcion(opcion);
+                  VistaAdministradorEmpleadoOpcion(opcion);
                }
             }
             break;
          case 2:
-            // Bucle para gestión de clientes
+            // Gestión de clientes
             boolean continuarClientes = true;
             while(continuarClientes) {
-               Integer opcion = numero.solicitarEntero(ingreso.VistaGestionClientes(), 3);
+               Integer opcion = numero.solicitarEntero(ingreso.VistaGestionClientes(), 6);
                if(opcion == null) continue;
                if(opcion == 0) {
                   JOptionPane.showMessageDialog(null, "Regresando al menú de administrador...");
@@ -79,7 +88,7 @@ public class Opcion {
             }
             break;
          case 3:
-            // Bucle para gestión de préstamos
+            // Gestión de préstamos
             boolean continuarPrestamos = true;
             while(continuarPrestamos) {
                Integer opcion = numero.solicitarEntero(ingreso.VistaGestionPrestamos(), 3);
@@ -93,7 +102,7 @@ public class Opcion {
             }
             break;
          case 4:
-            // Bucle para gestión de pagos
+            // Gestión de pagos
             boolean continuarPagos = true;
             while(continuarPagos) {
                Integer opcion = numero.solicitarEntero(ingreso.VistaGestionPagos(), 3);
@@ -107,7 +116,7 @@ public class Opcion {
             }
             break;
          case 5:
-            // Bucle para gestión de reportes
+            // Gestión de reportes
             boolean continuarReportes = true;
             while(continuarReportes) {
                Integer opcion = numero.solicitarEntero(ingreso.VistaGestionReportes(), 5);
@@ -123,19 +132,23 @@ public class Opcion {
       }
    }
 
-   public void VistaAdministradorEmpledaoOpcion(int valor){
+   public void VistaAdministradorEmpleadoOpcion(int valor){
       switch (valor) {
          case 1:
-            JOptionPane.showMessageDialog(null, "Registrar empleado");
+            JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Registrar empleado");
+            // Aquí irá empleadoCrud.Guardar() cuando esté implementado
             break;
          case 2:
-            JOptionPane.showMessageDialog(null, "Consultar empleados");
+            JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Consultar empleados");
+            // Aquí irá empleadoCrud.Buscar()
             break;
          case 3:
-            JOptionPane.showMessageDialog(null, "Actualizar empleado");
+            JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Actualizar empleado");
+            // Aquí irá empleadoCrud.Actualizar()
             break;
          case 4:
-            JOptionPane.showMessageDialog(null, "Eliminar empleado");
+            JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Eliminar empleado");
+            // Aquí irá empleadoCrud.Eliminar()
             break;
       }
    }
@@ -143,13 +156,28 @@ public class Opcion {
    public void VistaGestionClientesOpcion(int valor){
       switch (valor) {
          case 1:
-            JOptionPane.showMessageDialog(null, "Registrar cliente");
+            // ✅ REGISTRAR CLIENTE
+            registrarCliente();
             break;
          case 2:
-            JOptionPane.showMessageDialog(null, "Listar clientes");
+            // ✅ LISTAR CLIENTES
+            listarClientes();
             break;
          case 3:
-            JOptionPane.showMessageDialog(null, "Consultar préstamos del cliente");
+            // ✅ BUSCAR CLIENTE POR DOCUMENTO
+            buscarClientePorDocumento();
+            break;
+         case 4:
+            // ✅ ACTUALIZAR CLIENTE
+            actualizarCliente();
+            break;
+         case 5:
+            // ✅ CAMBIAR ESTADO DE CLIENTE
+            cambiarEstadoCliente();
+            break;
+         case 6:
+            // Consultar préstamos del cliente
+            consultarPrestamosCliente();
             break;
       }
    }
@@ -157,13 +185,13 @@ public class Opcion {
    public void VistaGestionPrestamosOpcion(int valor){
       switch (valor) {
          case 1:
-            JOptionPane.showMessageDialog(null, "Crear préstamo");
+            JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Crear préstamo");
             break;
          case 2:
-            JOptionPane.showMessageDialog(null, "Listar préstamos");
+            JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Listar préstamos");
             break;
          case 3:
-            JOptionPane.showMessageDialog(null, "Cambiar estado del préstamo");
+            JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Cambiar estado del préstamo");
             break;
       }
    }
@@ -171,13 +199,13 @@ public class Opcion {
    public void VistaGestionPagosOpcion(int valor){
       switch (valor) {
          case 1:
-            JOptionPane.showMessageDialog(null, "Registrar pago");
+            JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Registrar pago");
             break;
          case 2:
-            JOptionPane.showMessageDialog(null, "Consultar historial de pagos");
+            JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Consultar historial de pagos");
             break;
          case 3:
-            JOptionPane.showMessageDialog(null, "Ver saldo pendiente");
+            JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Ver saldo pendiente");
             break;
       }
    }
@@ -185,19 +213,19 @@ public class Opcion {
    public void VistaGestionReportesOpcion(int valor){
       switch (valor) {
          case 1:
-            JOptionPane.showMessageDialog(null, "Préstamos activos");
+            JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Préstamos activos");
             break;
          case 2:
-            JOptionPane.showMessageDialog(null, "Préstamos vencidos");
+            JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Préstamos vencidos");
             break;
          case 3:
-            JOptionPane.showMessageDialog(null, "Clientes morosos");
+            JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Clientes morosos");
             break;
          case 4:
-            JOptionPane.showMessageDialog(null, "Generar reporte automático");
+            JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Generar reporte automático");
             break;
          case 5:
-            JOptionPane.showMessageDialog(null, "Historial completo de préstamos");
+            JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Historial completo de préstamos");
             break;
       }
    }
@@ -205,7 +233,6 @@ public class Opcion {
    public void VistaUsuarioOpcion(Integer valor){
       if(valor == null) return;
 
-      // Bucle para mantener en el menú de usuario
       boolean continuarUsuario = true;
       while(continuarUsuario) {
          if(valor == 0) {
@@ -214,31 +241,200 @@ public class Opcion {
          } else {
             switch (valor) {
                case 1:
-                  JOptionPane.showMessageDialog(null, "Ver mis datos personales");
+                  JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Ver mis datos personales");
                   break;
                case 2:
-                  JOptionPane.showMessageDialog(null, "Consultar mis préstamos");
+                  JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Consultar mis préstamos");
                   break;
                case 3:
-                  JOptionPane.showMessageDialog(null, "Ver mis pagos");
+                  JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Ver mis pagos");
                   break;
                case 4:
-                  JOptionPane.showMessageDialog(null, "Realizar un pago");
+                  JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Realizar un pago");
                   break;
                case 5:
-                  JOptionPane.showMessageDialog(null, "Realizar Solicitud De Préstamo");
+                  JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Realizar Solicitud De Préstamo");
                   break;
                case 6:
-                  JOptionPane.showMessageDialog(null, "Simulación Préstamo");
+                  JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Simulación Préstamo");
                   break;
                case 7:
-                  JOptionPane.showMessageDialog(null, "Reportes (notificaciones)");
+                  JOptionPane.showMessageDialog(null, "🚧 Función en desarrollo: Reportes (notificaciones)");
                   break;
             }
-            // Pedir siguiente opción
             valor = numero.solicitarEntero(ingreso.VistaUsuario(), 7);
             if(valor == null) continue;
          }
+      }
+   }
+
+   // ==================== MÉTODOS DEL CRUD DE CLIENTES ====================
+
+   /**
+    * Registrar un nuevo cliente desde el menú principal (opción 2 de sesión)
+    */
+   private void registrarNuevoCliente() {
+      JOptionPane.showMessageDialog(null,
+         "╔═══════════════════════════════════╗\n" +
+         "║    REGISTRO DE NUEVO CLIENTE      ║\n" +
+         "╚═══════════════════════════════════╝\n\n" +
+         "📝 Complete el formulario de registro\n" +
+         "Todos los campos son obligatorios.",
+         "Registro",
+         JOptionPane.INFORMATION_MESSAGE);
+
+      Cliente nuevoCliente = new Cliente();
+      int resultado = clienteCrud.Guardar(nuevoCliente, null);
+
+      if (resultado > 0) {
+         JOptionPane.showMessageDialog(null,
+            "✅ ¡Registro exitoso!\n\n" +
+            "Ya puede iniciar sesión con sus credenciales.",
+            "Éxito",
+            JOptionPane.INFORMATION_MESSAGE);
+      }
+   }
+
+   /**
+    * Registrar cliente desde el menú de administrador
+    */
+   private void registrarCliente() {
+      JOptionPane.showMessageDialog(null,
+         "╔═══════════════════════════════════╗\n" +
+         "║   REGISTRAR CLIENTE (ADMIN)       ║\n" +
+         "╚═══════════════════════════════════╝\n\n" +
+         "📋 A continuación ingrese los datos del cliente.",
+         "Registro Administrativo",
+         JOptionPane.INFORMATION_MESSAGE);
+
+      Cliente nuevoCliente = new Cliente();
+      int resultado = clienteCrud.Guardar(nuevoCliente, null);
+
+      if (resultado > 0) {
+         JOptionPane.showMessageDialog(null,
+            "✅ Cliente registrado exitosamente en el sistema",
+            "Éxito",
+            JOptionPane.INFORMATION_MESSAGE);
+      }
+   }
+
+   /**
+    * Listar todos los clientes
+    */
+   private void listarClientes() {
+      List<Cliente> clientes = clienteCrud.Buscar();
+
+      if (clientes.isEmpty()) {
+         JOptionPane.showMessageDialog(null,
+            "ℹ️ No hay clientes registrados en el sistema.",
+            "Sin Resultados",
+            JOptionPane.INFORMATION_MESSAGE);
+         return;
+      }
+
+      StringBuilder lista = new StringBuilder();
+      lista.append("╔═══════════════════════════════════════════════╗\n");
+      lista.append("║          LISTADO DE CLIENTES                  ║\n");
+      lista.append("╚═══════════════════════════════════════════════╝\n\n");
+      lista.append(String.format("📊 Total de clientes: %d\n\n", clientes.size()));
+
+      for (int i = 0; i < clientes.size(); i++) {
+         Cliente c = clientes.get(i);
+         lista.append(String.format("───── Cliente #%d ─────\n", (i + 1)));
+         lista.append(String.format("🆔 ID: %s\n", c.getIdCliente()));
+         lista.append(String.format("👤 Nombre: %s %s %s %s\n", 
+            c.getNombre(), 
+            c.getNombre2() != null ? c.getNombre2() : "",
+            c.getApellido(),
+            c.getApellido2() != null ? c.getApellido2() : ""));
+         lista.append(String.format("📧 Correo: %s\n", c.getCorreo()));
+         lista.append(String.format("📄 Documento: %s\n", c.getDocumento()));
+         lista.append(String.format("📱 Teléfono: %s\n", c.getTelefono()));
+         lista.append(String.format("👥 Usuario: %s\n", c.getUsuario()));
+         lista.append(String.format("📊 Estado: %s\n", c.getEstado()));
+         lista.append("\n");
+      }
+
+      // Mostrar con scroll si es muy largo
+      JOptionPane.showMessageDialog(null,
+         lista.toString(),
+         "Listado de Clientes",
+         JOptionPane.INFORMATION_MESSAGE);
+   }
+
+   /**
+    * Buscar cliente por documento
+    */
+   private void buscarClientePorDocumento() {
+      JOptionPane.showMessageDialog(null,
+         "╔═══════════════════════════════════╗\n" +
+         "║     BUSCAR CLIENTE                ║\n" +
+         "╚═══════════════════════════════════╝\n\n" +
+         "🔍 Búsqueda por número de documento",
+         "Búsqueda",
+         JOptionPane.INFORMATION_MESSAGE);
+
+      clienteCrud.BuscarPor(new Object[]{});
+   }
+
+   /**
+    * Actualizar datos de un cliente
+    */
+   private void actualizarCliente() {
+      JOptionPane.showMessageDialog(null,
+         "╔═══════════════════════════════════╗\n" +
+         "║   ACTUALIZAR DATOS CLIENTE        ║\n" +
+         "╚═══════════════════════════════════╝\n\n" +
+         "✏️ Actualización de información del cliente",
+         "Actualización",
+         JOptionPane.INFORMATION_MESSAGE);
+
+      Cliente cliente = new Cliente();
+      clienteCrud.Actualizar(cliente, 0, null);
+   }
+
+   /**
+    * Cambiar estado de un cliente (ACTIVO, INACTIVO, SUSPENDIDO)
+    */
+   private void cambiarEstadoCliente() {
+      JOptionPane.showMessageDialog(null,
+         "╔═══════════════════════════════════╗\n" +
+         "║   CAMBIAR ESTADO CLIENTE          ║\n" +
+         "╚═══════════════════════════════════╝\n\n" +
+         "🔄 Cambio de estado del cliente\n" +
+         "Estados disponibles: ACTIVO, INACTIVO, SUSPENDIDO",
+         "Cambio de Estado",
+         JOptionPane.INFORMATION_MESSAGE);
+
+      // Reutilizar el método de actualizar que ya tiene cambio de estado
+      Cliente cliente = new Cliente();
+      clienteCrud.Actualizar(cliente, 0, null);
+   }
+
+   /**
+    * Consultar préstamos de un cliente específico
+    */
+   private void consultarPrestamosCliente() {
+      String documento = JOptionPane.showInputDialog(
+         "╔═══════════════════════════════════╗\n" +
+         "║   CONSULTAR PRÉSTAMOS             ║\n" +
+         "╚═══════════════════════════════════╝\n\n" +
+         "Ingrese el documento del cliente:");
+
+      if (documento == null || documento.trim().isEmpty()) {
+         return;
+      }
+
+      // Primero buscar el cliente
+      int clienteEncontrado = clienteCrud.BuscarPor(new Object[]{documento});
+
+      if (clienteEncontrado > 0) {
+         // Aquí iría la consulta de préstamos cuando esté implementada
+         JOptionPane.showMessageDialog(null,
+            "🚧 Función en desarrollo:\n\n" +
+            "Consulta de préstamos del cliente con documento: " + documento,
+            "En Desarrollo",
+            JOptionPane.INFORMATION_MESSAGE);
       }
    }
 }
